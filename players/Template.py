@@ -3,11 +3,11 @@ from player import Player
 class Template(Player):
     name = "template"
 
-    def play(self, history, players, totalDice, numDice, dice):
-        prevNum = history[-1, 0]
-        prevDie = history[-1, 1]
+    def play(self, input):
+        prevNum = input.getBetHistory()[-1, 0]
+        prevDie = input.getBetHistory()[-1, 1]
 
         return [prevNum + 1, prevDie]
 
-    def verify(self, history, players, totalDice, numDice, dice):
-        return history[-1][0] / totalDice < .5
+    def verify(self, input):
+        return input.getBetHistory()[-1, 0] / input.getTotalDice() < .5

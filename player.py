@@ -13,8 +13,8 @@ class Player:
     def loose(self):
         self.numDice -= 1
 
-    def play(self):
+    def play(self, input):
         error("You must override the play method")
 
-    def verify(self):
+    def verify(self, input):
         error("You must override the verify method")
