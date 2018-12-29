@@ -5,12 +5,13 @@ class PlayInput:
         this.player_index = turn % len(players)
         this.player = players[this.player_index]
 
-    '''
-        Returns
-        -------
-        [[int (how many dice, 1-infinite), int (what die, 0-5)]]
-    '''
     def getBetHistory(this):
+        '''
+            Returns
+            -------
+            [[int (how many dice, 1-infinite), int (what die, 0-5)]]
+        '''
+        
         return this.history
 
     def getAllPlayersDice(this):
