@@ -12,10 +12,11 @@ from player import Player
 import numpy as np
 
 from players.Template import Template
+from players.MiloRoll import MiloRoll
 
 players = [
     Template(),
-    Player()
+    MiloRoll()
 ]
 
 #print(players)

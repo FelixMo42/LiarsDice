@@ -1,7 +1,7 @@
 from player import Player
 
 class MiloRoll(Player):
-    name = "template"
+    name = "Milo"
 
     def play(self, history, players, totalDice, numDice, dice):
         prevNum = history[-1, 0]
