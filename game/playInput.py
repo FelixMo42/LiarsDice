@@ -48,17 +48,19 @@ class PlayInput:
         '''
             Returns
             -------
-            int (how many dice you have)
+            [int (how many of the die you rolled)]
+                ex: [0,0,1,1,0,2]
+                In this case you rolled one three, one four, two sixes, and zero
+                of every thing else.
         '''
+
         return this.player.dice
 
     def getYourTotalDice(this):
         '''
             Returns
             -------
-            [int (how many of the die you rolled)]
-                ex: [0,0,1,1,0,2]
-                In this case you rolled one three, one four two sixes and zero
-                of every thing else.
+            int (how many dice you have)
         '''
+
         return sum(this.player.dice)

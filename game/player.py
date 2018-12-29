@@ -3,6 +3,7 @@ import numpy as np
 
 class Player:
     name = "default"
+    maxName = ""
     numDice = 5
 
     def roll(self):
