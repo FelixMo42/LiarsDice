@@ -9,16 +9,16 @@ class PlayInput:
         '''
             Returns
             -------
-            [[int (how many dice, 1-infinite), int (what die, 0-5)]]
+            [[int (how many dice, 1-infinity), int (what die, 0-5)]]
         '''
-        
+
         return this.history
 
     def getAllPlayersDice(this):
         '''
             Returns
             -------
-            [int (how many dice player has, 1-infinite)]
+            [int (how many dice player has, 1-infinity)]
                 Quantity of dice each player has, excluding yourself
         '''
 
