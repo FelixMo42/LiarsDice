@@ -1,1 +1,1 @@
-# LiersDice
+# LiarsDice
