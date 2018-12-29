@@ -3,9 +3,10 @@ import numpy as np
 import random
 
 class Game:
-    def __init__(this, players, verbose):
+    def __init__(this, players, verbose, training):
         this.players = players
         this.verbose = verbose
+        this.training = training
         this.states = {}
         this.configureNames()
         for player in players:
@@ -51,7 +52,7 @@ class Match:
             if winner:
                 return winner
 
-            this.getTotalDice()
+            this.setTotalDice()
 
             this.round().lose()
 
@@ -71,7 +72,7 @@ class Match:
                 print(this.players[0].name + " wins!")
             return this.players[0]
 
-    def getTotalDice(this):
+    def setTotalDice(this):
         random.shuffle(this.players)
 
         this.total = [0] * 6
@@ -91,25 +92,39 @@ class Match:
             this.input = PlayInput(this.history, this.players, this.turn)
             this.player = this.players[this.turn % len(this.players)]
             # did player call out previus player
-            if this.prevPlayer and not this.player.verify(this.input):
-                # if he right
-                if this.total[this.history[-1][1]] >= this.history[-1][0]:
-                    if this.verbose == 2:
-                        print(this.player.name + " falsely called out " + this.prevPlayer.name)
-                    return this.player
-                # if he was wrong
-                else:
-                    if this.verbose == 2:
-                        print(this.player.name + " correctly called out " + this.prevPlayer.name)
-                    return this.prevPlayer
+            if this.prevPlayer:
+                belived = this.player.verify(this.input)
+                correct = this.total[this.history[-1][1]] >= this.history[-1][0]
+
+                if this.game.training:
+                    this.player.onVerify(correct, belived, this.input)
+                    this.prevPlayer.onPlay(correct, belived, this.input)
+
+                if not belived:
+                    if correct:
+                        if this.verbose == 2:
+                            print(this.player.name + " falsely called out " + this.prevPlayer.name)
+
+                        return this.player
+                    elif not correct:
+                        if this.verbose == 2:
+                            print(this.player.name + " correctly called out " + this.prevPlayer.name)
+
+                        return this.prevPlayer
+
             # what is the player saying
             move = this.player.play(this.input)
             if this.verbose:
                 print(this.player.name + " said " + str(move[0]) + " " + str(move[1] + 1) + "'s")
+
             # if its not legal
             if not this.moveIsLegal(move):
+                if this.game.training:
+                    this.player.onIllegalMove(this.input)
+
                 print(this.player.name + " didnt give a proper result")
                 return this.player
+
             # add the move to the history of all bets
             this.history = np.append(this.history, [move], axis=0)
 

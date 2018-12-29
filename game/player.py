@@ -21,7 +21,12 @@ class Player:
         self.numDice -= 1
 
     def play(self, input):
-        '''
+        '''(implement me!)
+
+            Parameters
+            ----------
+                input: PlayInput
+
             Raises
             ------
                 NotImplementedError
@@ -33,9 +38,25 @@ class Player:
 
         raise NotImplementedError("Player classes must override the play method!")
 
+    def onPlay(self, correct, belived, input):
+        '''Called after you make a claim when game is in training mode (implement me!)
+
+            Parameters
+            ----------
+                input: PlayInput
+                correct: bool (did you tell the truth)
+                belived: bool (wether you were called out)
+        '''
+
+        pass
 
     def verify(self, input):
-        '''
+        '''(implement me!)
+
+            Parameters
+            ----------
+                input: PlayInput
+
             Raises
             ------
                 NotImplementedError
@@ -46,3 +67,25 @@ class Player:
         '''
 
         raise NotImplementedError("Player classes must override the verify method!")
+
+    def onVerify(self, correct, belived, input):
+        '''Called after you verify a claim when game in training mode (implement me!)
+
+            Parameters
+            ----------
+                input: PlayInput
+                correct: bool (did they tell the truth)
+                belived: bool (wether you called them out)
+        '''
+
+        pass
+
+    def onIllegalMove(self, input):
+        '''Called after you make an illegal claim when game in training mode (implement me!)
+
+            Parameters
+            ----------
+                input: PlayInput
+        '''
+
+        pass
