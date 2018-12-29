@@ -6,17 +6,21 @@ class PlayInput:
         this.player = players[this.player_index]
 
     '''
-        History of bets
-        [[quantity from 1-infinite, die 0-5]]
+        Returns
+        -------
+        [[int (how many dice, 1-infinite), int (what die, 0-5)]]
     '''
     def getBetHistory(this):
         return this.history
 
-    '''
-        Quantity of dice each player has, excluding yourself
-        [numDice 1-infinite]
-    '''
     def getAllPlayersDice(this):
+        '''
+            Returns
+            -------
+            [int (how many dice player has, 1-infinite)]
+                Quantity of dice each player has, excluding yourself
+        '''
+
         dice = []
 
         for i in range(this.player_index + 1, len(this.players)):
@@ -27,11 +31,12 @@ class PlayInput:
 
         return dice
 
-    '''
-        Total quantity of dice across all players, including yourself
-        integer
-    '''
     def getTotalDice(this):
+        '''
+            Returns
+            -------
+            int (total numer of dice in the game)
+        '''
         total = 0
 
         for player in this.players:
@@ -39,16 +44,21 @@ class PlayInput:
 
         return total
 
-    '''
-        Quantity of dice that you have
-        [numDice 1-5] arr length 6
-    '''
     def getYourDice(this):
+        '''
+            Returns
+            -------
+            int (how many dice you have)
+        '''
         return this.player.dice
 
-    '''
-        Total quantity of dice you have
-        integer 0-4
-    '''
     def getYourTotalDice(this):
+        '''
+            Returns
+            -------
+            [int (how many of the die you rolled)]
+                ex: [0,0,1,1,0,2]
+                In this case you rolled one three, one four two sixes and zero
+                of every thing else.
+        '''
         return sum(this.player.dice)

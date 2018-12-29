@@ -54,12 +54,12 @@ while True:
             if total[history[-1][1]] >= history[-1][0]:
                 if verbose:
                     print(player.name + " falsely called out " + prevPlayer.name)
-                player.loose()
+                player.lose()
                 break
             else:
                 if verbose:
                     print(player.name + " correctly called out " + prevPlayer.name)
-                prevPlayer.loose()
+                prevPlayer.lose()
                 break
 
         move = player.play(input)
@@ -67,7 +67,7 @@ while True:
             print(player.name + " said " + str(move[0]) + " " + str(move[1] + 1) + "'s")
         if move[0] < history[-1, 0] or move[1] > 5 or (move[0] == history[-1, 0] and move[1] <= history[-1, 1]):
             print(player.name + " didnt give a proper result")
-            player.loose()
+            player.lose()
             break
         history = np.append(history, [move], axis=0)
 
