@@ -35,10 +35,12 @@ while True:
         break
 
     total = [0] * 6
+    playersDice = []
     for player in players:
         print(player.name + " | " + "*" * player.numDice)
         player.roll()
         total += player.dice
+        playersDice.append(player.numDice)
 
     totalDice = sum(total)
 
@@ -46,7 +48,7 @@ while True:
         player = players[turn % len(players)]
         if prevPlayer and not player.verify(
             history=history,
-            players=players,
+            players=playersDice,
             totalDice=totalDice,
             numDice=player.numDice,
             dice=player.dice
@@ -64,11 +66,10 @@ while True:
 
         move = player.play(
             history=history,
-            players=players,
+            players=playersDice,
             totalDice=totalDice,
             numDice=player.numDice,
-            dice=player.dice,
-            prevPlayer=prevPlayer
+            dice=player.dice
         )
         if verbose:
             print(player.name + " said " + str(move[0]) + " " + str(move[1] + 1) + "'s")
