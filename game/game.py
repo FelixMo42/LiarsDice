@@ -26,8 +26,8 @@ class Game:
             this.states[Match(this).play().name] += 1
 
         if rounds > 1:
-            for player in this.states:
-                print(player + " | " + str(this.states[player] / rounds * 100) + "%")
+            for dict in sorted(this.states.items(), key=lambda kv: -kv[1]):
+                print(dict[0] + " | " + str(dict[1] / rounds * 100) + "%")
 
 
 class Match:
