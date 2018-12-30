@@ -5,15 +5,26 @@ class Papa(Player):
     name = "Papa"
 
     def play(self, input):
-        prevNum = input.getBetHistory()[-1, 0]
+        prevQty = input.getBetHistory()[-1, 0]
         prevDie = input.getBetHistory()[-1, 1]
-        
-        # if the last bet's die was not a six, go up a die and bet same quantity
-        if (prevDie < 5):
-            return [prevNum, prevDie + 1]
-        # else increase quantity and stay at same die
+
+        # find my die with highest quantity
+        myHighest = self.getMyHighestDie(input.getYourDice())
+        myHighestQty = myHighest[0]
+        myHighestDie = myHighest[1]
+        #print(f"Papa's highest is {myHighestQty} {myHighestDie+1}")
+        # if my higest is higher than previous bet, bet it
+        if (myHighestQty > prevQty):
+            return myHighest
+        # else if my higest + 1 is higher than previous bet, bet it
+        elif ((myHighestQty + 1) > prevQty):
+            return [myHighestQty + 1, myHighestDie]
+        # else if the last bet's die was not a six, go up a die and bet same quantity
+        elif (prevDie < 5):
+            return [prevQty, prevDie + 1]
+        # else stay at same die and increase quantity
         else:
-            return [prevNum + 1, prevDie]
+            return [prevQty + 1, prevDie]
 
     def verify(self, input):
         lastBet = input.getBetHistory()[-1]
@@ -28,3 +39,12 @@ class Papa(Player):
         likelyOrNot = "likely" if acceptBet else "NOT likely"
         print(f"Papa thinks last bet of {lastBetQty} dice is {likelyOrNot} given that there's {input.getTotalDice()} total dice and I have {myDieQty}")
         return acceptBet
+
+    def getMyHighestDie(self, myDice):
+        higestQty = 0
+        highestDie = -1
+        for i, qty in enumerate(myDice):
+            if (qty > higestQty):
+                highestQty = qty
+                highestDie = i
+        return [highestQty, highestDie]

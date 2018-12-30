@@ -22,4 +22,4 @@ game = Game(
     training
 )
 
-game.play(500)
+game.play(100)

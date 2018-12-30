@@ -1,6 +1,6 @@
 from game.player import Player
 from util.probability import atleast
-import tensorflow as tf
+#import tensorflow as tf
 
 '''class Felix0(Player):
     name = "Felix"
