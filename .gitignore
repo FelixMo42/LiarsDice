@@ -2,4 +2,4 @@ __pycache__
 .pyc
 
 __Visual Studio Code__
-.vscode/settings.json
+.vscode/*
