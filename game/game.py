@@ -85,9 +85,12 @@ class Match:
         this.total = [0] * 6
         this.playersDice = []
         for player in this.players:
-            if this.verbose > 0:
-                print(player.name + " | " + "*" * player.numDice)
             player.roll()
+            if this.verbose > 0:
+                dice = ""
+                for i in range(len(player.dice)):
+                    dice = str(i + 1) * player.dice[i] + dice
+                print(player.name + " | " + dice)
             this.total += player.dice
             this.playersDice.append(player.numDice)
 

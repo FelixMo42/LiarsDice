@@ -1,5 +1,6 @@
 import random
 import numpy as np
+import tensorflow as tf
 from util.probability import atleast
 
 class MiloRoll:
@@ -8,7 +9,8 @@ class MiloRoll:
     numDice = 5
 
     def __init__(self):
-        self.FullIn = tf.zeros([15],dtype=tf.float32)
+        self.FullLoss = 0
+        self.FullIn = tf.zeros([15,1],dtype=tf.float32)
         self.L1 = tf.layers.dense(inputs=self.FullIn,units=20)
         self.L2 = tf.layers.dense(inputs=self.L1,units=20)
         self.L3 = tf.layers.dense(inputs=self.L2,units=20)
@@ -19,14 +21,10 @@ class MiloRoll:
         self.sess.run(self.init)
 
     def setup(self,input):
-         Maxs = [0,0,0,0,0,0]
-        for play in self.getBetHistory():
-            if Maxs[play[0]-1] < play[1]:
-                Maxs[play[0]-1] = play[1]
-        dicelist = []
-        for i in range(6):
-            dicelist.append(self.getYourDice()[i][1])
-        self.FullIn = tf.Tensor(Maxs + [len(self.players()),self.getTotalDice(),atleast(input.getBetHistory()[-1, 0], input.getTotalDice())] + dicelist + )
+        self.Maxs = [0,0,0,0,0,0]
+        for play in input.getBetHistory():
+            if self.Maxs[play[0]-1] < play[1]:
+                self.Maxs[play[0]-1] = play[1]
 
     def roll(self):
         '''Rolls your dice (do not override!)
@@ -50,6 +48,13 @@ class MiloRoll:
             return [prevNum + 1, 0]
         else:
             return [prevNum, prevDie + 1]
+        prevNum = input.getBetHistory()[-1, 0]
+        prevDie = input.getBetHistory()[-1, 1]
+
+        if prevDie >= 5:
+            return [prevNum + 1, 0]
+        else:
+            return [prevNum, prevDie + 1]
 
     def onPlay(self, correct, belived, input):
         '''Called after you make a claim when game is in training mode (implement me!)
@@ -62,13 +67,30 @@ class MiloRoll:
         '''
 
         pass
+        pass
 
     def verify(self, input):
         self.setup(input)
-        if sess.run(out) > .5:
+
+        arr = []
+        for num in np.append(
+                    np.array(
+                        self.Maxs + [len(input.players),
+                        input.getTotalDice(),
+                        atleast(input.getBetHistory()[-1, 0], input.getTotalDice())]
+                    ),
+                    input.getYourDice()
+                ):
+            arr.append([num])
+
+        if self.sess.run(
+            self.out,
+            {self.FullIn: arr}
+        )[0] > .5:
             return True
         else:
             return False
+
     def onVerify(self, correct, belived, input):
         '''Called after you verify a claim when game in training mode (implement me!)
 
@@ -79,20 +101,39 @@ class MiloRoll:
                 belived: bool (wether you called them out)
         '''
 
-        pass
         self.setup(input)
+        arr = []
+        for num in np.append(
+                    np.array(
+                        self.Maxs + [len(input.players),
+                        input.getTotalDice(),
+                        atleast(input.getBetHistory()[-1, 0], input.getTotalDice())]
+                    ),
+                    input.getYourDice()
+                ):
+            arr.append([num])
+
+
         optimizer = tf.train.GradientDescentOptimizer(0.01)
 
         if correct != belived:
-            if sess.run(out) > .5:
-                loss = (out - 1) ** 2
+            if self.sess.run(
+                self.out,
+                {self.FullIn: arr}
+            )[0] > .5:
+                loss = (self.out - 1) ** 2
             else:
-                loss = out ** 2
+                loss = self.out ** 2
         else:
-            if sess.run(out) > .5:
-                loss = out ** 2
+            if self.sess.run(
+                self.out,
+                {self.FullIn: arr}
+            )[0] > .5:
+                loss = self.out ** 2
             else:
-                loss = (out - 1) ** 2
+                loss = (self.out - 1) ** 2
+        train = optimizer.minimize(loss)
+        _, loss_value = self.sess.run((train, loss))
 
     def onIllegalMove(self, input):
         '''Called after you make an illegal claim when game in training mode (implement me!)
@@ -102,4 +143,9 @@ class MiloRoll:
                 input: PlayInput
         '''
 
+        pass
+
+        pass
+
+    def onWin(self, didWin):
         pass
