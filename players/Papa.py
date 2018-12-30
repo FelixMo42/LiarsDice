@@ -1,5 +1,4 @@
 from game.player import Player
-from util.probability import atleast
 
 class Papa(Player):
     name = "Papa"
@@ -12,11 +11,11 @@ class Papa(Player):
         myHighest = self.getMyHighestDie(input.getYourDice())
         myHighestQty = myHighest[0]
         myHighestDie = myHighest[1]
-        #print(f"Papa's highest is {myHighestQty} {myHighestDie+1}")
-        # if my higest is higher than previous bet, bet it
+
+        # if my higest qty is higher than previous qty, bet it
         if (myHighestQty > prevQty):
             return myHighest
-        # else if my higest + 1 is higher than previous bet, bet it
+        # else if my higest qty + 1 is higher than previous qty, bet it
         elif ((myHighestQty + 1) > prevQty):
             return [myHighestQty + 1, myHighestDie]
         # else if the last bet's die was not a six, go up a die and bet same quantity
@@ -27,17 +26,17 @@ class Papa(Player):
             return [prevQty + 1, prevDie]
 
     def verify(self, input):
-        lastBet = input.getBetHistory()[-1]
-        lastBetQty = lastBet[0]
-        lastBetDie = lastBet[1]
-        myDieQty = input.getYourDice()[lastBetDie]
-        lastBetQtyMinusMyDice = lastBetQty - myDieQty
-        totalDiceMinusMyDice = input.getTotalDice() - myDieQty
+        prevBet = input.getBetHistory()[-1]
+        prevQty = prevBet[0]
+        prevDie = prevBet[1]
+        myQty = input.getYourDice()[prevDie]
 
         # accept bet if quantity is less than 1/3 of total quantity of dice, excluding my dice
-        acceptBet = (lastBetQtyMinusMyDice * 3 < totalDiceMinusMyDice)
+        prevQtyMinusMyDice = prevQty - myQty
+        totalDiceMinusMyDice = input.getTotalDice() - myQty
+        acceptBet = (prevQtyMinusMyDice * 3 < totalDiceMinusMyDice)
         likelyOrNot = "likely" if acceptBet else "NOT likely"
-        print(f"Papa thinks last bet of {lastBetQty} dice is {likelyOrNot} given that there's {input.getTotalDice()} total dice and I have {myDieQty}")
+        print(f"Papa thinks last bet of {prevQty} {prevDie+1}'s is {likelyOrNot} given that there's {input.getTotalDice()} total dice and I have {myQty} {prevDie+1}'s")
         return acceptBet
 
     def getMyHighestDie(self, myDice):
