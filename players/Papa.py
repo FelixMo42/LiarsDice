@@ -15,10 +15,13 @@ class Papa(Player):
         # if my higest qty is higher than previous qty, bet it
         if (myHighestQty > prevQty):
             return myHighest
-        # else if my higest qty + 1 is higher than previous qty, bet it
+        # if my higest qty is the same as the previous qty but is a higher die, bet it
+        elif (myHighestQty == prevQty and myHighestDie > prevDie):
+            return myHighest
+        # if my higest qty + 1 is higher than previous qty, bet it
         elif ((myHighestQty + 1) > prevQty):
             return [myHighestQty + 1, myHighestDie]
-        # else if the last bet's die was not a six, go up a die and bet same quantity
+        # if I can go up a die and bet same quantity
         elif (prevDie < 5):
             return [prevQty, prevDie + 1]
         # else stay at same die and increase quantity
