@@ -4,7 +4,6 @@ from players.Template import Template
 #from players.MiloRoll import MiloRoll
 from players.Felix import Felix
 from players.Papa import Papa
-#from players.Papa2 import Papa2
 
 players = [
     Template,
@@ -14,7 +13,7 @@ players = [
     Papa
 ]
 
-verbose = 0
+verbose = 2
 training = True
 
 game = Game(

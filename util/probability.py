@@ -32,6 +32,9 @@ def atleast(n, t):
             float (the change your roll at lest n of a die out of t)
     '''
 
+    n = int(n)
+    t = int(t)
+
     prob = 0
     for k in range(n,t + 1):
         prob += nCr(t, k) * (1/6)**k * (5/6)**(t-k)
