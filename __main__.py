@@ -2,19 +2,19 @@ from game.game import Game
 
 from players.Template import Template
 #from players.MiloRoll import MiloRoll
-from players.Felix import Felix, Felix0
+from players.Felix import Felix
 from players.Papa import Papa
-from players.Papa2 import Papa2
+#from players.Papa2 import Papa2
 
 players = [
     Template,
-#    MiloRoll,
+    #MiloRoll,
     Felix,
-    Felix0,
+    #Felix0,
     Papa
 ]
 
-verbose = 2
+verbose = 0
 training = True
 
 game = Game(
@@ -23,4 +23,4 @@ game = Game(
     training
 )
 
-game.play(100)
+game.play(500)

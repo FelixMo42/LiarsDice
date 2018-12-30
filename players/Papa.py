@@ -22,5 +22,5 @@ class Papa(Player):
         # accept bet if quantity is less than 1/3 of total quantity of dice
         acceptBet = (lastBetQty * 3 < input.getTotalDice())
         likelyOrNot = "likely" if acceptBet else "NOT likely"
-        print(f"Papa thinks last bet of {lastBetQty} dice is {likelyOrNot} given that there's {input.getTotalDice()} total dice")
+        #print(f"Papa thinks last bet of {lastBetQty} dice is {likelyOrNot} given that there's {input.getTotalDice()} total dice")
         return acceptBet
