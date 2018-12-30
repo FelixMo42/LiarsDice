@@ -1,4 +1,5 @@
 from game.player import Player
+from util.probability import atleast
 
 class Template(Player):
     name = "template"
@@ -10,4 +11,4 @@ class Template(Player):
         return [prevNum + 1, prevDie]
 
     def verify(self, input):
-        return input.getBetHistory()[-1, 0] / input.getTotalDice() < .5
+        return atleast(input.getBetHistory()[-1, 0], input.getTotalDice()) < .75

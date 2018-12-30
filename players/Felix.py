@@ -1,4 +1,5 @@
 from game.player import Player
+from util.probability import atleast
 
 class Felix(Player):
     name = "Felix"
@@ -13,7 +14,7 @@ class Felix(Player):
             return [prevNum, prevDie + 1]
 
     def verify(self, input):
-        return input.getBetHistory()[-1, 0] / input.getTotalDice() < .5
+        return atleast(input.getBetHistory()[-1, 0], input.getTotalDice()) > .1
 
 class Felix0(Player):
     name = "Felix-β"
