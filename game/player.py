@@ -89,3 +89,13 @@ class Player:
         '''
 
         pass
+
+    def onWin(self, didWin):
+        '''Called after the round ends (implement me!)
+
+            Parameters
+            ----------
+                didWin: bool (did I win)
+        '''
+
+        pass

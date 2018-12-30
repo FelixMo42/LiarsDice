@@ -54,7 +54,14 @@ class Match:
 
             this.setTotalDice()
 
-            this.round().lose()
+            loser = this.round()
+            loser.lose()
+            if this.game.training:
+                for player in this.players:
+                    if player == loser:
+                        loser.onWin(False)
+                    else:
+                        loser.onWin(True)
 
             if this.verbose == 2:
                 print("round over!")
