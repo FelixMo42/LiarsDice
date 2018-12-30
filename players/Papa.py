@@ -7,7 +7,7 @@ class Papa(Player):
     def play(self, input):
         prevNum = input.getBetHistory()[-1, 0]
         prevDie = input.getBetHistory()[-1, 1]
-        
+
         # if the last bet's die was not a six, go up a die and bet same quantity
         if (prevDie < 5):
             return [prevNum, prevDie + 1]
@@ -26,5 +26,5 @@ class Papa(Player):
         # accept bet if quantity is less than 1/3 of total quantity of dice, excluding my dice
         acceptBet = (lastBetQtyMinusMyDice * 3 < totalDiceMinusMyDice)
         likelyOrNot = "likely" if acceptBet else "NOT likely"
-        print(f"Papa thinks last bet of {lastBetQty} dice is {likelyOrNot} given that there's {input.getTotalDice()} total dice and I have {myDieQty}")
+        #print(f"Papa thinks last bet of {lastBetQty} dice is {likelyOrNot} given that there's {input.getTotalDice()} total dice and I have {myDieQty}")
         return acceptBet

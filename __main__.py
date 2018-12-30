@@ -9,7 +9,6 @@ players = [
     Template,
     #MiloRoll,
     Felix,
-    #Felix0,
     Papa
 ]
 
@@ -22,4 +21,4 @@ game = Game(
     training
 )
 
-game.play(500)
+game.play(100)
