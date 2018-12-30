@@ -75,9 +75,8 @@ class Player:
             ----------
                 input: PlayInput
                 correct: bool (did they tell the truth)
-                belived: bool (wether you called them out)
+                belived: bool (whether you called them out)
         '''
-
         pass
 
     def onIllegalMove(self, input):
