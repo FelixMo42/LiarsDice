@@ -18,7 +18,7 @@ class PlayInput:
         '''
             Returns
             -------
-            [int (how many dice player has, 1-infinity)]
+            [int (how many dice player has, 1-5)]
                 Quantity of dice each player has, excluding yourself
         '''
 
