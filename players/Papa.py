@@ -7,12 +7,11 @@ class Papa(Player):
         prevQty = input.getBetHistory()[-1, 0]
         prevDie = input.getBetHistory()[-1, 1]
 
-<<<<<<< HEAD
         # if the last bet's die was not a six, go up a die and bet same quantity
         if (prevDie < 5):
-            return [prevNum, prevDie + 1]
+            return [prevQty, prevDie + 1]
         # else increase quantity and stay at same die
-=======
+
         # find my die with highest quantity
         myHighest = self.getMyHighestDie(input.getYourDice())
         myHighestQty = myHighest[0]
@@ -31,7 +30,6 @@ class Papa(Player):
         elif (prevDie < 5):
             return [prevQty, prevDie + 1]
         # else stay at same die and increase quantity
->>>>>>> a6f80710fc406fcc06fcef4ea5073106e3a51b2e
         else:
             return [prevQty + 1, prevDie]
 
@@ -46,11 +44,8 @@ class Papa(Player):
         totalDiceMinusMyDice = input.getTotalDice() - myQty
         acceptBet = (prevQtyMinusMyDice * 3 < totalDiceMinusMyDice)
         likelyOrNot = "likely" if acceptBet else "NOT likely"
-<<<<<<< HEAD
         #print(f"Papa thinks last bet of {lastBetQty} dice is {likelyOrNot} given that there's {input.getTotalDice()} total dice and I have {myDieQty}")
-=======
-        print(f"Papa thinks last bet of {prevQty} {prevDie+1}'s is {likelyOrNot} given that there's {input.getTotalDice()} total dice and I have {myQty} {prevDie+1}'s")
->>>>>>> a6f80710fc406fcc06fcef4ea5073106e3a51b2e
+        #print(f"Papa thinks last bet of {prevQty} {prevDie+1}'s is {likelyOrNot} given that there's {input.getTotalDice()} total dice and I have {myQty} {prevDie+1}'s")
         return acceptBet
 
     def getMyHighestDie(self, myDice):

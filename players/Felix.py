@@ -1,11 +1,7 @@
 from game.player import Player
 from util.probability import atleast
-<<<<<<< HEAD
-import tensorflow as tf
 import numpy as np
-=======
-#import tensorflow as tf
->>>>>>> a6f80710fc406fcc06fcef4ea5073106e3a51b2e
+
 
 '''class Felix0(Player):
     name = "Felix"
@@ -46,7 +42,7 @@ import numpy as np
 
 class Felix(Player):
     name = "FelixBot_alpha"
-    prob = .5
+    prob = .2
     probHistory = []
 
     def play(this, input):
@@ -70,22 +66,23 @@ class Felix(Player):
 
 class Felix0(Player):
     name = "FelixBot_beta"
-    prob = .5
+    prob = .2
     probHistory = []
 
     def play(this, input):
         prevNum = input.getBetHistory()[-1, 0]
         prevDie = input.getBetHistory()[-1, 1]
 
-        if prevDie >= 5:
-            return [prevNum + 1, 5]
-        else:
-            return [prevNum, 5]
+
+        newNum = prevNum + 1
+        newDice = np.argmax(this.dice)
+
+        return [newNum, newDice]
 
     def verify(this, input):
-        return this.getOdds(input) > this.prob
+        return this.getOdds(input.getBetHistory()[-1], input) > this.prob
 
-    def getOdds(this, input):
+    def getOdds(this, move, input):
         return atleast(
             input.getBetHistory()[-1, 0] - input.getYourDice()[input.getBetHistory()[-1, 1]],
             input.getTotalDice() - input.getYourTotalDice()

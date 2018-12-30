@@ -4,13 +4,16 @@ import random
 
 class Game:
     def __init__(this, players, verbose, training):
-        this.players = players
+        this.players = []
         this.verbose = verbose
         this.training = training
         this.states = {}
-        this.configureNames()
         for player in players:
-            this.states[player.name] = 0
+            p = player()
+            this.players.append(p)
+            this.states[p] = 0
+
+        this.configureNames()
 
     def configureNames(this):
         maxLeng = len(this.players[0].name)
@@ -19,16 +22,16 @@ class Game:
                 maxLeng = len(player.name)
 
         for player in this.players:
-            player.name = player.name + " " * (maxLeng - len(player.name))
+            player.maxName = player.name + " " * (maxLeng - len(player.name))
 
 
     def play(this, rounds=1):
         for i in range(rounds):
-            this.states[Match(this).play().name] += 1
+            this.states[Match(this).play()] += 1
 
         if rounds > 1:
             for dict in sorted(this.states.items(), key=lambda kv: -kv[1]):
-                print(dict[0] + " | " + str(dict[1] / rounds * 100) + "%")
+                print(dict[0].maxName + " | " + str(dict[1] / rounds * 100) + "%")
 
 
 class Match:
@@ -40,7 +43,8 @@ class Match:
 
         this.players = []
         for player in game.players:
-            this.players.append(player())
+            player.reset()
+            this.players.append(player)
 
 
     def play(this, round=1):
