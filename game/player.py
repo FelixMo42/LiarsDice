@@ -6,6 +6,9 @@ class Player:
     maxName = ""
 
     def reset(self):
+        '''Resets your dice (do not override!)
+        '''
+
         self.numDice = 5
 
     def roll(self):

@@ -42,48 +42,58 @@ import numpy as np
 
 class Felix(Player):
     name = "FelixBot_alpha"
+
     prob = .2
-    probHistory = []
+    safe = .8
 
     def play(this, input):
-        prevNum = input.getBetHistory()[-1, 0]
-        prevDie = input.getBetHistory()[-1, 1]
+        qty = input.getBetHistory()[-1, 0]
+        die = np.argmax(this.dice)
 
+        if qty < this.dice[die]:
+            qty = this.dice[die]
+        elif input.getBetHistory()[-1, 1] >= die:
+            qty += 1
 
-        newNum = prevNum + 1
-        newDice = np.argmax(this.dice)
+        while this.getOdds([qty + 1, die], input) > this.safe:
+            qty += 1
 
-        return [newNum, newDice]
+        return [qty, die]
 
     def verify(this, input):
         return this.getOdds(input.getBetHistory()[-1], input) > this.prob
 
     def getOdds(this, move, input):
         return atleast(
-            input.getBetHistory()[-1, 0] - input.getYourDice()[input.getBetHistory()[-1, 1]],
+            move[0] - input.getYourDice()[move[1]],
             input.getTotalDice() - input.getYourTotalDice()
         )
 
 class Felix0(Player):
     name = "FelixBot_beta"
+
     prob = .2
-    probHistory = []
+    safe = .8
 
     def play(this, input):
-        prevNum = input.getBetHistory()[-1, 0]
-        prevDie = input.getBetHistory()[-1, 1]
+        qty = input.getBetHistory()[-1, 0]
+        die = np.argmax(this.dice)
 
+        if qty < this.dice[die]:
+            qty = this.dice[die]
+        elif input.getBetHistory()[-1, 1] >= die:
+            qty += 1
 
-        newNum = prevNum + 1
-        newDice = np.argmax(this.dice)
+        while this.getOdds([qty + 1, die], input) > this.safe:
+            qty += 1
 
-        return [newNum, newDice]
+        return [qty, die]
 
     def verify(this, input):
         return this.getOdds(input.getBetHistory()[-1], input) > this.prob
 
     def getOdds(this, move, input):
         return atleast(
-            input.getBetHistory()[-1, 0] - input.getYourDice()[input.getBetHistory()[-1, 1]],
+            move[0] - input.getYourDice()[move[1]],
             input.getTotalDice() - input.getYourTotalDice()
         )
