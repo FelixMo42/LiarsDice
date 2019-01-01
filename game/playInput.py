@@ -14,6 +14,15 @@ class PlayInput:
 
         return this.history
 
+    def getPrevBet(this):
+        '''
+        Returns the previous player's bet, the one to accept or reject
+        -------
+        [int (quantity of dice), int (what die, 0-5)]
+        '''
+
+        return this.history[-1]
+
     def getAllPlayersDice(this):
         '''
             Returns

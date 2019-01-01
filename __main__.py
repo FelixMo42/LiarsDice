@@ -4,13 +4,17 @@ from players.Template import Template
 #from players.MiloRoll import MiloRoll
 from players.Felix import Felix, Felix0
 from players.Papa import Papa
+from players.Papa2 import Papa2
+from players.Papa3 import Papa3
 
 players = [
     Template,
     #MiloRoll,
     Felix,
     #Felix0,
-    Papa
+    Papa,
+    Papa2,
+    Papa3
 ]
 
 verbose = 0
@@ -22,4 +26,4 @@ game = Game(
     training
 )
 
-game.play(1000)
+game.play(500)
