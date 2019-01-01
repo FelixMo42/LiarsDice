@@ -8,17 +8,19 @@ from players.Papa2 import Papa2
 from players.Papa3 import Papa3
 from players.Papa4 import Papa4
 from players.Papa5 import Papa5
+from players.Papa6 import Papa6
 
 players = [
-    Template,
+    #Template,
     #MiloRoll,
     Felix,
     #Felix0,
-    Papa1,
-    Papa2,
-    Papa3,
+    #Papa1,
+    #Papa2,
+    #Papa3,
     Papa4,
-    Papa5
+    Papa5,
+    Papa6
 ]
 
 verbose = 0
