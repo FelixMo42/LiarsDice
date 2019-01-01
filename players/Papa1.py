@@ -1,7 +1,7 @@
 from game.player import Player
 
-class Papa(Player):
-    name = "Papa"
+class Papa1(Player):
+    name = "Papa 1"
 
     def play(self, input):
         prevQty = input.getBetHistory()[-1, 0]

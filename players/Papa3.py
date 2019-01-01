@@ -6,7 +6,7 @@ class Papa3(Player):
         I'm a Liar's Dice player
     """
     o = .3
-    name = "Papa3 " + str(o) # Name of this player
+    name = "Papa 3 " + str(o) # Name of this player
 
     def play(self, input):
         """

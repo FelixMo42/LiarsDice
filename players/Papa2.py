@@ -1,7 +1,7 @@
 from game.player import Player
 
 class Papa2(Player):
-    name = "Papa2"
+    name = "Papa 2"
 
     def play(self, input):
         # get previous player's bet
