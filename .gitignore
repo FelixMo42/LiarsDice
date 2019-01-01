@@ -3,5 +3,4 @@ __pycache__
 
 __Visual Studio Code__
 .vscode/*
-players/Papa2.py
 .pylintrc

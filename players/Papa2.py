@@ -1,33 +1,30 @@
 from game.player import Player
 
-class Papa(Player):
-    name = "Papa"
+class Papa2(Player):
+    name = "Papa2"
 
     def play(self, input):
+        # get previous player's bet
         prevQty = input.getBetHistory()[-1, 0]
         prevDie = input.getBetHistory()[-1, 1]
-
-        # if the last bet's die was not a six, go up a die and bet same quantity
-        if (prevDie < 5):
-            return [prevQty, prevDie + 1]
 
         # find my die with highest quantity
         myHighest = self.getMyHighestDie(input.getYourDice())
         myHighestQty = myHighest[0]
         myHighestDie = myHighest[1]
 
-        # if my higest qty is higher than previous qty, bet it
+        # if my highest qty is higher than previous qty, bet it
         if (myHighestQty > prevQty):
             return myHighest
-        # if my higest qty is the same as the previous qty but is a higher die, bet it
+        # if my highest qty is the same as the previous qty but is a higher die, bet it
         elif (myHighestQty == prevQty and myHighestDie > prevDie):
             return myHighest
-        # if my higest qty + 1 is higher than previous qty, bet it
+        # if I can go up to 6 and bet same quantity
+        elif (prevDie < 5):
+            return [prevQty, 5]
+        # if my highest qty + 1 is higher than previous qty, bet it
         elif ((myHighestQty + 1) > prevQty):
             return [myHighestQty + 1, myHighestDie]
-        # if I can go up a die and bet same quantity
-        elif (prevDie < 5):
-            return [prevQty, prevDie + 1]
         # else stay at same die and increase quantity
         else:
             return [prevQty + 1, prevDie]
