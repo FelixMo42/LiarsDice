@@ -86,7 +86,7 @@ class MiloRoll:
         if self.sess.run(
             self.out,
             {self.FullIn: arr}
-        )[0] > .5:
+        )[0] > .9:
             return True
         else:
             return False

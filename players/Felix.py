@@ -1,6 +1,7 @@
 from game.player import Player
 from util.probability import atleast
-#import tensorflow as tf
+import numpy as np
+
 
 '''class Felix0(Player):
     name = "Felix"
@@ -40,16 +41,59 @@ from util.probability import atleast
         print(this.sess.run(this.minProb))'''
 
 class Felix(Player):
-    name = "Felix-β"
+    name = "FelixBot_alpha"
+
+    prob = .2
+    safe = .8
 
     def play(this, input):
-        prevNum = input.getBetHistory()[-1, 0]
-        prevDie = input.getBetHistory()[-1, 1]
+        qty = input.getBetHistory()[-1, 0]
+        die = np.argmax(this.dice)
 
-        if prevDie >= 5:
-            return [prevNum + 1, 5]
-        else:
-            return [prevNum, prevDie + 1]
+        if qty < this.dice[die]:
+            qty = this.dice[die]
+        elif input.getBetHistory()[-1, 1] >= die:
+            qty += 1
+
+        while this.getOdds([qty + 1, die], input) > this.safe:
+            qty += 1
+
+        return [qty, die]
 
     def verify(this, input):
-        return atleast(input.getBetHistory()[-1, 0], input.getTotalDice()) > .5
+        return this.getOdds(input.getBetHistory()[-1], input) > this.prob
+
+    def getOdds(this, move, input):
+        return atleast(
+            move[0] - input.getYourDice()[move[1]],
+            input.getTotalDice() - input.getYourTotalDice()
+        )
+
+class Felix0(Player):
+    name = "FelixBot_beta"
+
+    prob = .2
+    safe = .8
+
+    def play(this, input):
+        qty = input.getBetHistory()[-1, 0]
+        die = np.argmax(this.dice)
+
+        if qty < this.dice[die]:
+            qty = this.dice[die]
+        elif input.getBetHistory()[-1, 1] >= die:
+            qty += 1
+
+        while this.getOdds([qty + 1, die], input) > this.safe:
+            qty += 1
+
+        return [qty, die]
+
+    def verify(this, input):
+        return this.getOdds(input.getBetHistory()[-1], input) > this.prob
+
+    def getOdds(this, move, input):
+        return atleast(
+            move[0] - input.getYourDice()[move[1]],
+            input.getTotalDice() - input.getYourTotalDice()
+        )
