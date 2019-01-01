@@ -34,7 +34,7 @@ class Papa(Player):
         prevDie = prevBet[1]
         myQty = input.getYourDice()[prevDie]
 
-        # accept bet if quantity is less than 1/3 of total quantity of dice, excluding my dice
+        # accept bet if quantity is less than 1/3 of total quantity of dice, excluding my qty of same die
         prevQtyMinusMyDice = prevQty - myQty
         totalDiceMinusMyDice = input.getTotalDice() - myQty
         acceptBet = (prevQtyMinusMyDice * 3 < totalDiceMinusMyDice)
