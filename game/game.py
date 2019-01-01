@@ -131,12 +131,15 @@ class Match:
             if this.verbose:
                 print(this.player.name + " said " + str(move[0]) + " " + str(move[1] + 1) + "'s")
 
-            # if its not legal
-            if not this.moveIsLegal(move):
+            try:
+                # is the move legal?
+                this.moveIsLegal(move)
+            except Exception as err:
+                # if its not legal
                 if this.game.training:
                     this.player.onIllegalMove(this.input)
 
-                print(this.player.name + " didnt give a proper result")
+                print(this.player.name + " didn\'t give a proper result: " + str(err))
                 return this.player
 
             # add the move to the history of all bets
@@ -146,11 +149,11 @@ class Match:
             this.prevPlayer = this.player
 
     def moveIsLegal(this, move):
-        if move[1] > 5:
-            return False
-        if move[0] >= this.history[-1, 0]:
-            return True
-        if move[0] == this.history[-1, 0] and move[1] <= this.history[-1, 1]:
-            return True
-        else:
-            return False
+        if move[1] > 5 or move[1] < 0:
+            raise Exception('die must be 0-5. It was: {}'.format(move[1]))
+        elif move[0] < 1:
+            raise Exception('quantity must be 1 or more. It was: {}'.format(move[0]))
+        elif move[0] < this.history[-1, 0]:
+            raise Exception('quantity {} is lower than the previous bet\'s quantity of {}'.format(move[0], this.history[-1, 0]))
+        elif move[0] == this.history[-1, 0] and move[1] <= this.history[-1, 1]:
+            raise Exception('{} {}\'s isn\'t higher than the previous bet, {} {}\'s'.format(move[0], move[1], this.history[-1, 0], this.history[-1, 1]))

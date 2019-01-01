@@ -1,3 +1,5 @@
+import numpy as numpy
+
 class PlayInput:
     def __init__(this, history, players, turn):
         this.history = history
@@ -74,3 +76,20 @@ class PlayInput:
         '''
 
         return sum(this.player.dice)
+
+    def getYourHighestQty(this):
+        '''
+            Return the quantity of the die you have the most of
+            -------
+            int (1 or greater)
+        '''
+        return this.getYourDice()[this.getYourHighestDie()]
+
+    def getYourHighestDie(this):
+        '''
+            Return the die that you have the most of
+            -------
+            int (0-5)
+        '''
+        return numpy.argmax(this.getYourDice())
+    
