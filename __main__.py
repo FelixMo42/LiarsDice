@@ -6,6 +6,7 @@ from players.Felix import Felix, Felix0
 from players.Papa1 import Papa1
 from players.Papa2 import Papa2
 from players.Papa3 import Papa3
+from players.Papa4 import Papa4
 
 players = [
     Template,
@@ -14,7 +15,8 @@ players = [
     #Felix0,
     Papa1,
     Papa2,
-    Papa3
+    Papa3,
+    Papa4
 ]
 
 verbose = 0
