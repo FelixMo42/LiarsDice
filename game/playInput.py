@@ -77,6 +77,14 @@ class PlayInput:
 
         return sum(this.player.dice)
 
+    def getYourHighestDice(this):
+        '''
+            Return the dice you have the most of
+            -------
+            [int (1 or greater quantity), int (0-5 die)]
+        '''
+        return [this.getYourDice()[this.getYourHighestDie()], this.getYourHighestDie()]
+
     def getYourHighestQty(this):
         '''
             Return the quantity of the die you have the most of

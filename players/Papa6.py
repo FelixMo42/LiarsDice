@@ -7,23 +7,27 @@ class Papa6(Player):
         I'm a Liar's Dice player
     """
     safeOddsToBet = .7 # Probability above which I will place a bet
-    oddsToAcceptBet = .3 # Probability above which I will accept others' bets
-    name = "Papa 6 " + str(oddsToAcceptBet) + " " + str(safeOddsToBet) # Name of this player
+    name = "Papa 6 " + str(safeOddsToBet) # Name of this player
 
     def play(self, input):
         """
-            Make a bet
+            Make a bet with the game's standard input
+        """
+        return self.bet(input.getPrevBet(), input.getYourHighestDice(), input.getTotalDice(), input.getYourTotalDice())
+
+    def bet(self, prevBet, myHighestDice, totalDice, myTotalDice):
+        """
+            Make a bet with the parameters exploded
         """
         # get previous player's bet
-        prevQty, prevDie = input.getPrevBet()
+        prevQty, prevDie = prevBet
 
         # get my die with highest quantity
-        myHighestDie = input.getYourHighestDie()
-        myHighestQty = input.getYourHighestQty()
+        myHighestQty, myHighestDie = myHighestDice
 
         # what's my highest safe bet?
         myHighestSafeQty = myHighestQty
-        while self.getOdds(myHighestSafeQty + 1, myHighestQty, input.getTotalDice(), input.getYourTotalDice()) > self.safeOddsToBet:
+        while atleast((myHighestSafeQty - myHighestQty) + 1, totalDice - myTotalDice) > self.safeOddsToBet:
             myHighestSafeQty += 1
 
         # if my highest safe bet is higher than previous qty, bet it
@@ -54,20 +58,17 @@ class Papa6(Player):
         myTotalDice = input.getYourTotalDice()
 
         # calculate odds of bet
-        odds = self.getOdds(prevQty, myQty, totalDiceInGame, myTotalDice)
+        odds = atleast(prevQty - myQty, totalDiceInGame - myTotalDice)
+        # what would be my next bet?
+        myNextBetQty, myNextBetDie = self.bet(input.getPrevBet(), input.getYourHighestDice(), input.getTotalDice(), input.getYourTotalDice())
+        # calculate odds of my next bet
+        myNextBetDiceQty = input.getYourDice()[myNextBetDie]
+        oddsOfMyNextBet = atleast(myNextBetQty - myNextBetDiceQty, totalDiceInGame - myTotalDice)
+        # if my future odds are less likely than challenging this bet, challenge it
+        oddsOfMeWinningIfIChallenge = 1 - odds
+        acceptBet = oddsOfMeWinningIfIChallenge < oddsOfMyNextBet
 
-        # accept bet if it's over a threshhold
-        acceptBet = odds > self.oddsToAcceptBet
         #acceptOrReject = "accept" if acceptBet else "reject"
         #print(f"{self.name} will {acceptOrReject} last bet of {prevQty} {prevDie+1}'s because it's {round(odds*100)}% likely given that there's {input.getTotalDice()} total dice and I have {myQty} {prevDie+1}'s.")
-        return acceptBet
 
-    def getOdds(self, betQty, myQty, totalDiceInGame, myTotalDice):
-        """
-            Return the probability that there's at least betQty of a die out of totalDice dice
-            -------
-            float (0-1)
-        """
-        qty = betQty - myQty
-        total = totalDiceInGame - myTotalDice
-        return atleast(qty, total)
+        return acceptBet
