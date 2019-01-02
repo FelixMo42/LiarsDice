@@ -80,7 +80,7 @@ class Match:
 
         if len(this.players) == 1:
             if this.verbose > 0:
-                print('\033[1m' + '\033[95m' + this.players[0].name + " wins!" + '\033[0m' + '\033[0m')
+                print('\033[1m' + '\033[95m' + this.players[0].name + " wins!" + '\033[0m' + '\033[0m' + u' \U0001F389')
             return this.players[0]
 
     def setTotalDice(this):
