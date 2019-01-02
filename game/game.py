@@ -31,7 +31,7 @@ class Game:
 
         if rounds > 1:
             for dict in sorted(this.states.items(), key=lambda kv: -kv[1]):
-                print('\033[37m' + dict[0].maxName + '\033[0m' + " | " + '\033[37m' + str(dict[1] / rounds * 100) + "%" + '\033[0m')
+                print('\033[37m' + dict[0].maxName + '\033[0m' + " │ " + '\033[37m' + str(dict[1] / rounds * 100) + "%" + '\033[0m')
 
 
 class Match:
@@ -94,7 +94,7 @@ class Match:
                 dice = ""
                 for i in range(len(player.dice)):
                     dice = str(i + 1) * player.dice[i] + dice
-                print(player.maxName + " | " + dice)
+                print('\033[37m' + player.maxName + '\033[0m' + " │ " + '\033[37m' + dice + '\033[0m')
             this.total += player.dice
             this.playersDice.append(player.numDice)
 
@@ -117,12 +117,12 @@ class Match:
                 if not belived:
                     if correct:
                         if this.verbose == 2:
-                            print('\033[95m' + this.player.name + " falsely called out " + this.prevPlayer.name + '\033[0m')
+                            print('\033[37m' + this.player.maxName + " falsely called out " + this.prevPlayer.name + '\033[0m')
 
                         return this.player
                     elif not correct:
                         if this.verbose == 2:
-                            print('\033[95m' + this.player.name + " correctly called out " + this.prevPlayer.name + '\033[0m')
+                            print('\033[37m' + this.player.maxName + " correctly called out " + this.prevPlayer.name + '\033[0m')
 
                         return this.prevPlayer
 
