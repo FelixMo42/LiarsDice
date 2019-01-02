@@ -1,2 +1,2 @@
 # LiarsDice
-# HA FOOF YA GOT PRANKED
+# Milo + math = 🤷‍♂️
