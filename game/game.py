@@ -31,7 +31,7 @@ class Game:
 
         if rounds > 1:
             for dict in sorted(this.states.items(), key=lambda kv: -kv[1]):
-                print(dict[0].maxName + " | " + str(dict[1] / rounds * 100) + "%")
+                print('\033[37m' + dict[0].maxName + '\033[0m' + " | " + '\033[37m' + str(dict[1] / rounds * 100) + "%" + '\033[0m')
 
 
 class Match:
@@ -68,7 +68,7 @@ class Match:
                         loser.onWin(True)
 
             if this.verbose == 2:
-                print('\033[1m' + '\033[95m' + "round over!" + '\033[0m')
+                print('\033[1m' + '\033[95m' + "round over!" + '\033[0m' + '\033[0m')
             elif this.verbose == 1:
                 print("-------------------------------------")
 
@@ -80,7 +80,7 @@ class Match:
 
         if len(this.players) == 1:
             if this.verbose > 0:
-                print(this.players[0].name + " wins!")
+                print('\033[1m' + '\033[95m' + this.players[0].name + " wins!" + '\033[0m' + '\033[0m')
             return this.players[0]
 
     def setTotalDice(this):
