@@ -68,7 +68,7 @@ class Match:
                         loser.onWin(True)
 
             if this.verbose == 2:
-                print("round over!")
+                print('\033[1m' + '\033[95m' + "round over!" + '\033[0m')
             elif this.verbose == 1:
                 print("-------------------------------------")
 
@@ -94,7 +94,7 @@ class Match:
                 dice = ""
                 for i in range(len(player.dice)):
                     dice = str(i + 1) * player.dice[i] + dice
-                print(player.name + " | " + dice)
+                print(player.maxName + " | " + dice)
             this.total += player.dice
             this.playersDice.append(player.numDice)
 
@@ -117,19 +117,19 @@ class Match:
                 if not belived:
                     if correct:
                         if this.verbose == 2:
-                            print(this.player.name + " falsely called out " + this.prevPlayer.name)
+                            print('\033[95m' + this.player.name + " falsely called out " + this.prevPlayer.name + '\033[0m')
 
                         return this.player
                     elif not correct:
                         if this.verbose == 2:
-                            print(this.player.name + " correctly called out " + this.prevPlayer.name)
+                            print('\033[95m' + this.player.name + " correctly called out " + this.prevPlayer.name + '\033[0m')
 
                         return this.prevPlayer
 
             # what is the player saying
             move = this.player.play(this.input)
             if this.verbose:
-                print(this.player.name + " said " + str(move[0]) + " " + str(move[1] + 1) + "'s")
+                print('\033[37m' + this.player.maxName + " said " + str(move[0]) + " " + str(move[1] + 1) + "'s" + '\033[0m')
 
             try:
                 # is the move legal?
