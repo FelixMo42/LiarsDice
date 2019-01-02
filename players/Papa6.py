@@ -7,7 +7,7 @@ class Papa6(Player):
         I'm a Liar's Dice player
     """
     safeOddsToBet = .7 # Probability above which I will place a bet
-    name = "Papa 6 " + str(safeOddsToBet) # Name of this player
+    name = "Papa 6" # Name of this player
 
     def play(self, input):
         """

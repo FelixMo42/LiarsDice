@@ -8,7 +8,7 @@ class Papa5(Player):
     """
     safeOddsToBet = .8 # Probability above which I will place a bet
     oddsToAcceptBet = .3 # Probability above which I will accept others' bets
-    name = "Papa 5 " + str(oddsToAcceptBet) + " " + str(safeOddsToBet) # Name of this player
+    name = "Papa 5" # Name of this player
 
     def play(self, input):
         """
